@@ -1,5 +1,7 @@
 package com.artemisa.yamba;
 
+import winterwell.jtwitter.Twitter;
+import winterwell.jtwitter.TwitterException;
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,6 +15,7 @@ public class StatusActivity extends Activity implements OnClickListener {
 	private static final String TAG = "StatusActivity";
 	private Button updateButton;
 	private TextView editText;
+	private Twitter twitter;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +27,9 @@ public class StatusActivity extends Activity implements OnClickListener {
 		updateButton.setOnClickListener(this);
 
 		editText = (TextView) findViewById(R.id.editText);
+
+		twitter = new Twitter("student", "password");
+		twitter.setAPIRootUrl("http://yamba.marakana.com/api");
 	}
 
 	@Override
@@ -35,7 +41,13 @@ public class StatusActivity extends Activity implements OnClickListener {
 
 	// Called when button is clicked
 	public void onClick(View v) {
-		Log.d(TAG, "OnCLick: " + editText.getText().toString());
+		try {
+			twitter.setStatus(editText.getText().toString());
+			Log.d(TAG, "OnCLick: " + editText.getText().toString());
+		} catch (TwitterException e) {
+			Log.e(TAG, e.toString());
+			e.printStackTrace();
+		}
 	}
 
 }
