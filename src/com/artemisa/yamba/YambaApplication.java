@@ -47,10 +47,11 @@ public class YambaApplication extends Application implements
 
 	@Override
 	public synchronized void onSharedPreferenceChanged(
-			SharedPreferences sharedPreferences, String key) { // $circled{6}$
+			SharedPreferences sharedPreferences, String key) {
 		// TODO Auto-generated method stub
 		Log.d(TAG, "onSharedPreferenceChanged()");
 		twitter = null;
 
 	}
+	
 }

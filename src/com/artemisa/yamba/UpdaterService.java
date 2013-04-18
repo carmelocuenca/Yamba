@@ -1,5 +1,9 @@
 package com.artemisa.yamba;
 
+import java.util.List;
+
+import winterwell.jtwitter.Twitter;
+import winterwell.jtwitter.TwitterException;
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
@@ -55,6 +59,7 @@ public class UpdaterService extends Service {
 	 * Threads tha permos the actual update from the online service
 	 */
 	private class Updater extends Thread {
+		List<Twitter.Status> timeline;
 
 		private Updater() {
 			super("UpdaterService-Updater");
@@ -67,7 +72,17 @@ public class UpdaterService extends Service {
 			while (updaterService.runFlag) {
 				Log.d(TAG, "Updater running");
 				try {
-					// Some work goes here ...
+					try {
+						// Get the timeline from the cloud
+						timeline = ((YambaApplication) getApplication()).getTwitter().getFriendsTimeline();
+					} catch (TwitterException e) {
+						Log.e(TAG, "Failed to connect to twitter service", e);
+					}
+					// Loop over the timeline and print it out
+					for (Twitter.Status status : timeline) { //
+						Log.d(TAG, String.format("%s: %s", status.user.name,
+								status.text)); //
+					}
 					Log.d(TAG, "Updater ran");
 					Thread.sleep(DELAY);
 				} catch (InterruptedException e) {
