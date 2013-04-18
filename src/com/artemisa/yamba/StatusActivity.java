@@ -4,12 +4,9 @@ import winterwell.jtwitter.Twitter;
 import winterwell.jtwitter.TwitterException;
 import android.app.Activity;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -23,14 +20,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class StatusActivity extends Activity implements OnClickListener,
-		TextWatcher, OnSharedPreferenceChangeListener {
+		TextWatcher {
 	private static final String TAG = "StatusActivity";
 	private Button updateButton;
 	private EditText editText;
-	private Twitter twitter;
 	private TextView textCount;
-	
-	private SharedPreferences prefs;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -47,9 +41,6 @@ public class StatusActivity extends Activity implements OnClickListener,
 		textCount = (TextView) findViewById(R.id.textCount);
 		textCount.setText(Integer.toString(140));
 		textCount.setTextColor(Color.GREEN);
-
-		prefs = PreferenceManager.getDefaultSharedPreferences(this);
-		prefs.registerOnSharedPreferenceChangeListener(this);
 	}
 
 	@Override
@@ -76,7 +67,7 @@ public class StatusActivity extends Activity implements OnClickListener,
 		@Override
 		protected String doInBackground(String... statuses) {
 			try {
-				Twitter.Status status = getTwitter().updateStatus(statuses[0]);
+				Twitter.Status status = ((YambaApplication) getApplication()).getTwitter().updateStatus(statuses[0]);
 				return status.text;
 			} catch (TwitterException e) {
 				Log.e(TAG, e.toString());
@@ -139,24 +130,6 @@ public class StatusActivity extends Activity implements OnClickListener,
 		// no used
 	}
 
-	private Twitter getTwitter() {
-		if (twitter == null){
-			String username, password, apiRoot;
-			username = prefs.getString("username", "");
-			password = prefs.getString("password", "");
-			apiRoot = prefs.getString("apiRoot", "http://yamba.maracana-com/api");
-			// Connect to twitter.com
-			twitter = new Twitter(username, password);
-			twitter.setAPIRootUrl(apiRoot);
-		}
-		return twitter;
-	}
-	@Override
-	public void onSharedPreferenceChanged(SharedPreferences sharedPreferences,
-			String key) {
-		// TODO Auto-generated method stub
-		Log.d(TAG, "onSharedPreferenceChanged()");
-		twitter = null;
-		
-	}
+	
+	
 }
