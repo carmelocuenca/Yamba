@@ -1,4 +1,19 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
-    <item android:id="@+id/itemPrefs" android:title="@string/titlePrefs" android:icon="@android:drawable/ic_menu_preferences"></item>
+
+    <item
+        android:id="@+id/itemPrefs"
+        android:icon="@android:drawable/ic_menu_preferences"
+        android:title="@string/titlePrefs">
+    </item>
+    <item
+        android:id="@+id/itemServiceStart"
+        android:icon="@android:drawable/ic_media_play"
+        android:title="@string/tittleServiceStart">
+    </item>
+    <item
+        android:id="@+id/itemServiceStop"
+        android:icon="@android:drawable/ic_media_pause"
+        android:title="@string/tittleServiceStop">
+    </item>
 
 </menu>

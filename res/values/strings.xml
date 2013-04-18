@@ -14,5 +14,7 @@
     <string name="tittleApi">API Root</string>
     <string name="summaryApi">URL API for your service</string>
     <string name="titlePrefs">Preference</string>
+    <string name="tittleServiceStart">Start Service</string>
+    <string name="tittleServiceStop">Stop Service</string>
 
 </resources>
