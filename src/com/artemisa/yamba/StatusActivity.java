@@ -58,7 +58,9 @@ public class StatusActivity extends Activity implements OnClickListener,
 			startActivity(new Intent(this, PrefsActivity.class));
 			break;
 		case R.id.itemServiceStart:
+			Log.d(TAG,"AAA");
 			startService(new Intent(this, UpdaterService.class));
+			Log.d(TAG,"bbb");
 			break;
 		case R.id.itemServiceStop:
 			stopService(new Intent(this, UpdaterService.class));
